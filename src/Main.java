@@ -1,4 +1,5 @@
 import java.util.GregorianCalendar;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Scanner;
 
@@ -27,44 +28,44 @@ public class Main {
         Account acc21 = new Account("account1 of client2");
         Account acc22 = new Account("account2 of client2");
         Account acc23= new Account("account3 of client2");
-        HashSet<Account> accounts1 = new HashSet<Account>();
-        HashSet<Account> accounts2 = new HashSet<Account>();
-        accounts1.add(acc11);
-        accounts1.add(acc12);
-        accounts2.add(acc21);
-        accounts2.add(acc22);
-        accounts2.add(acc23);
-        HashSet<Client> clients = new HashSet<Client>();
-        Client client1 = new Client("Client1",new GregorianCalendar(2020,11,5),accounts1);
-        Client client2 = new Client("Client2",new GregorianCalendar(2001,11,5),accounts2);
-        clients.add(client1);
-        clients.add(client2);
+        Client client1 = new Client("Client1",new GregorianCalendar(2020,11,5));
+        Client client2 = new Client("Client2",new GregorianCalendar(2001,11,5));
+        HashMap<Account,Client> bankMap = new HashMap<Account, Client>();
+        bankMap.put(acc11,client1);
+        bankMap.put(acc12,client1);
+        bankMap.put(acc21,client2);
+        bankMap.put(acc22,client2);
+        bankMap.put(acc23,client2);
 
-        //Новый объект-экземпляр банка
-        BankOperations bank = new BankOperations(clients);
+        BankOperations bank = new BankOperations(bankMap);
 
-        System.out.println("Вот какие клиенты есть в банке:");
+
+
+        System.out.println("Вот какие клиенты и счета есть в банке:");
         bank.printAllClientsAndAccounts();
 
         //Добавим нового клиента, а потом добавим ему еще один счет
         Account acc31 = new Account("account1 of client3");
         Account acc32 = new Account("account2 of client3");
-        HashSet<Account> accounts3 = new HashSet<Account>();
-        accounts3.add(acc31);
-        accounts3.add(acc32);
-        Client client3 = new Client("Client3",new GregorianCalendar(1975,11,5),accounts3);
-        bank.addClient(client3);
+        Client client3 = new Client("Client3",new GregorianCalendar(1975,11,5));
+        bank.addAccount(client3,acc31);
+        bank.addAccount(client3,acc32);
         Account acc33 = new Account("account3 of client3");
         bank.addAccount(client3,acc33);
 
-        System.out.println("А теперь вот какие клиенты есть в банке:");
+        System.out.println("А теперь вот какие клиенты и их счета есть в банке:");
         bank.printAllClientsAndAccounts();
 
         System.out.println("Поищем счета клиента 3:");
-        for (Account a:bank.getAccounts(client3)) {
-            System.out.println(a.id); };
+        bank.getAccounts(client3);
 
-        System.out.println("А теперь поищем клиента по id счета");//хотя тут может быть стоило бы икать не по объекту Account, а именно по номеру счета?
-        System.out.println(bank.getClient(acc33).name);
+        System.out.println("А теперь поищем клиента по счету");
+        bank.getClient(acc31);
+
+        System.out.println("Каким клиентам можем выдать деньги?");
+        bank.canThisClientGetMoney(client1);
+        bank.canThisClientGetMoney(client2);
+        bank.canThisClientGetMoney(client3);
+
     }
 }
