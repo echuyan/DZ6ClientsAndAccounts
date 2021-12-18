@@ -1,29 +1,26 @@
-import java.util.Calendar;
-import java.util.Date;
-import java.util.GregorianCalendar;
+import java.time.LocalDate;
 
 
+public class Client {
 
-public class Client{
-
-public String name;
-private GregorianCalendar birtdayDate;
+    private String name;
+    private LocalDate birthdayDate;
 
 
-    public Client(String name, GregorianCalendar birtdayDate) {
+    public Client(String name, LocalDate birthdayDate) {
         this.name = name;
-        this.birtdayDate = birtdayDate;
-       }
+        this.birthdayDate = birthdayDate;
+    }
 
-       public String getName() {
+    public String getName() {
         return name;
-       }
+    }
 
-       public GregorianCalendar getBirthdayDate(Client c) {
+    public LocalDate getBirthdayDate(Client c) {
 
-        return birtdayDate;
+        return birthdayDate;
 
-       }
+    }
 
 
 }
